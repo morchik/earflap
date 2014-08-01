@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import ru.vmordo.util.Log;
+import ru.vmordo.util.Loc;
 
 public class TrackingService extends Service {
 
@@ -18,13 +19,17 @@ public class TrackingService extends Service {
 
 	public void onCreate() {
 		super.onCreate();
+		ru.vmordo.util.Log.context = getBaseContext();
 		Log.d(LOG_TAG, "onCreate");
+		startService(new Intent(this, TrackingService.class));
 	}
 
+	@SuppressWarnings("deprecation")
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.v(LOG_TAG, "onStartCommand TrackingService");
 		int NOTIFICATION_ID = 1;
 		Context acontext = getApplicationContext();
+		Loc.start(acontext);
 		SharedPreferences prefs = 
 		        PreferenceManager.getDefaultSharedPreferences(acontext); 
 		boolean val = prefs.getBoolean("chb_autostart", false);
@@ -36,7 +41,7 @@ public class TrackingService extends Service {
 		if (MainActivity.allowRec) 
 		{
 			
-			int icon = ru.vmordo.earflap.R.drawable.ic_launcher;
+			int icon = ru.vmordo.earflap.R.drawable.ic_plusone_tall_off_client;//.ic_launcher;
 			long when = System.currentTimeMillis();
 			Context context = getBaseContext();
 
@@ -46,19 +51,18 @@ public class TrackingService extends Service {
         		//.setSmallIcon(R.drawable.new_mail)
         		//.setLargeIcon(aBitmap)
         		//.build();
-			Notification notification =  new android.app.Notification(icon,
-					"Sound Servece started foreground", when);
+			Notification notification =  new android.app.Notification(icon,	"", when);
 			// —оздание намерени€ с указанием класса вашей Activity, которую хотите
 			// вызвать при нажатии на оповещение.
 			Intent notificationIntent = new Intent(this, LoginActivity.class);
 			notificationIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-			String txt = "Earflap started foreground ";
+			String txt = "";
 			if (MainActivity.allowRec)
 				txt = txt + "ON";
 			else
 				txt = txt + "OFF";
-			notification.setLatestEventInfo(context, "Earflap", txt, contentIntent);
+			notification.setLatestEventInfo(context, "", txt, contentIntent);
 			startForeground(NOTIFICATION_ID, notification); 
 			someTask();
 		}

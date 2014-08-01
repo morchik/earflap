@@ -46,7 +46,7 @@
     </EditTextPreference>
 
     <CheckBoxPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="chb_autostart"
         android:summaryOff="Do nothing"
         android:summaryOn="Auto start"

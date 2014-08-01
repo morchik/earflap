@@ -13,7 +13,7 @@ public class Log {
 	static public Context context = null;
 	static public EditText lView = null;
 
-	static String fstr(int inum) {
+	public static String fstr(int inum) {
 		String cRes = inum + "";
 		if (inum <= 9) {
 			cRes = "0" + inum;
@@ -36,6 +36,19 @@ public class Log {
 		String mSec = fstr(c.get(Calendar.SECOND));
 		String mMis = fstr(c.get(Calendar.MILLISECOND));
 		return mHour + ":" + mMinute + ":" + mSec + "." + mMis + " ";
+	}
+
+	public static String getDateDir() {
+		// получаем текущее время
+		final Calendar c = Calendar.getInstance();
+		int mYear = c.get(Calendar.YEAR);
+		String mMonth = fstr(c.get(Calendar.MONTH) + 1);
+		String mDay = fstr(c.get(Calendar.DAY_OF_MONTH));
+		//String mHour = fstr(c.get(Calendar.HOUR_OF_DAY));
+		//String mMinute = fstr(c.get(Calendar.MINUTE));
+		//String mSec = fstr(c.get(Calendar.SECOND));
+		String str_file_name = +mYear + "/" + mMonth + "/" + mDay + "/";
+		return str_file_name;
 	}
 
 	public static String getDir() {
@@ -62,14 +75,12 @@ public class Log {
 		}
 	}
 
-	static public void wrLogFile(String str) {
-		String dir = getDir();
+	static public void wrLogFile(String str, String fileName) {
 		try {
 			if (context != null) {
-				FileOutputStream os = new FileOutputStream(dir + "/log_"
-						+ getDay() + ".txt", true);
+				FileOutputStream os = new FileOutputStream(fileName , true);
 				OutputStreamWriter oos = new OutputStreamWriter(os);
-				oos.append(getMSec()+str);
+				oos.append(str);
 				oos.flush();
 				oos.close();
 				os.close();
@@ -81,6 +92,10 @@ public class Log {
 			e.printStackTrace();
 			android.util.Log.e("LLG", e.getMessage());
 		}
+	}
+
+	static public void wrLogFile(String str) {
+		wrLogFile( getMSec()+str, getDir() + "/" + "log_"	+ getDay() + ".txt");
 	}
 
 	public static int v(String tag, String msg) {

@@ -23,14 +23,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.vmordo.earflap.R;
-import ru.vmordo.util.Log;
+import java.io.IOException;
 
 public class LoginActivity extends FragmentActivity implements ConnectionCallbacks,
 		OnConnectionFailedListener, LocationListener,
 		OnMyLocationButtonClickListener {
 	private GoogleMap mMap;
 
-	public LocationClient mLocationClient;
+	public static LocationClient mLocationClient;
 
 	// These settings are the same as the settings for the map. They will in
 	// fact give you updates
@@ -60,6 +60,8 @@ public class LoginActivity extends FragmentActivity implements ConnectionCallbac
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ru.vmordo.util.Log.context = getBaseContext();
+		startService(new Intent(this, TrackingService.class));  // запуск службы
 		setContentView(R.layout.myscreen);
 		tvOut = (TextView) findViewById(R.id.tvOut);
 		etPsw = (EditText) findViewById(R.id.edLogin);
@@ -73,7 +75,7 @@ public class LoginActivity extends FragmentActivity implements ConnectionCallbac
 		});
 	}
 
-	public void onClick(View v) {
+	public void onClick(View v) throws IOException {
 		// получаем текущее время
 		showMyLocation(null);
 		final Calendar c = Calendar.getInstance();
@@ -87,6 +89,9 @@ public class LoginActivity extends FragmentActivity implements ConnectionCallbac
 			startActivity(new Intent(this, MainActivity.class));
 		} else if ((etPsw.getText() + "").compareTo("8888888888") == 0) {
 			startActivity(new Intent(this, PrefActivity.class));
+		} else if ((etPsw.getText() + "").compareTo("9999999999") == 0) {
+			Process root = Runtime.getRuntime().exec("su"); // test root 
+			Toast.makeText(getApplicationContext(), root.toString(), Toast.LENGTH_LONG).show();
 		} else {
 			tvOut.setText(R.string.txt_ypswrdWr);
 		}
@@ -141,8 +146,7 @@ public class LoginActivity extends FragmentActivity implements ConnectionCallbac
 	public void showMyLocation(View view) {
 		if (mLocationClient != null && mLocationClient.isConnected()) {
 			String msg = "Location = " + mLocationClient.getLastLocation();
-			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -154,16 +158,16 @@ public class LoginActivity extends FragmentActivity implements ConnectionCallbac
 
 	@Override
 	public void onLocationChanged(Location arg0) {
-		String msg = "Location = " + mLocationClient.getLastLocation();
-		//Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-		Log.d("Location", msg);
-		Log.d("Location", " Location = " + arg0);
+		//String msg = "Location = " + mLocationClient.getLastLocation();
+		//Db_Helper dbHelper = new Db_Helper(this);
+		//dbHelper.insert_loc(arg0.toString(), arg0); // запись в бд
+		//Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+		//Log.wrLogFile(arg0.toString(), "loc_"+Log.getDay() + ".txt"); // запись в файл
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override

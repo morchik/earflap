@@ -1,5 +1,6 @@
 package ru.vmordo.earflap;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
 import ru.vmordo.util.Log;
 
 public class Db_Helper extends SQLiteOpenHelper {
@@ -27,6 +29,19 @@ public class Db_Helper extends SQLiteOpenHelper {
 				+ "_id integer primary key autoincrement," + "file_name text,"
 				+ "max_ampl text," + "avg_ampl text," + "rlen text,"
 				+ "fstatus text, "
+				+ "date_time TIMESTAMP default CURRENT_TIMESTAMP );");
+		// создаем таблицу с полями
+		
+		db.execSQL("create table loc_log ("
+				+ "_id integer primary key autoincrement," 
+				+ "raw text," // object
+				+ "Latitude number," // "Широта (°)"
+				+ "Longitude number," // ,"Долгота (°)"
+				+ "Altitude number," // ,"Высота (м)"
+				+ "Speed number," // ,"Скорость (м/с)"
+				+ "Bearing number," // ,,"Азимут (°)"
+				+ "Accuracy number," // ,"Точность (м)"
+				+ "DTime TIMESTAMP," // ,"Время"
 				+ "date_time TIMESTAMP default CURRENT_TIMESTAMP );");
 	}
 
@@ -51,6 +66,24 @@ public class Db_Helper extends SQLiteOpenHelper {
 		long rowID = db.insert("rec_log", null, cv);
 		Log.d(LOG_TAG, "row inserted, ID = " + rowID);
 
+		// закрываем подключение к БД
+		this.close();
+	}
+
+	public void insert_loc(String raw, Location loc) {
+		ContentValues cv = new ContentValues();
+		// подключаемся к БД
+		SQLiteDatabase db = this.getWritableDatabase();
+		cv.put("Raw", loc.toString());
+		cv.put("Altitude", loc.getAltitude()); // + "Altitude number," // ,"Высота (м)"
+		cv.put("Latitude", loc.getLatitude()); // + "Latitude number," // "Широта (°)"	
+		cv.put("Longitude", loc.getLongitude()); // + "Longitude number," // ,"Долгота (°)"
+		cv.put("Speed", loc.getSpeed()); // + "Speed number," // ,"Скорость (м/с)"
+		cv.put("Bearing", loc.getBearing()); // + "Bearing number," // ,,"Азимут (°)"
+		cv.put("Accuracy", loc.getAccuracy()); // + "Accuracy number," // ,"Точность (м)"
+		cv.put("DTime", (new Date(loc.getTime())).toString()); // + "DTime TIMESTAMP," // ,"Время"
+
+		db.insert("loc_log", null, cv);
 		// закрываем подключение к БД
 		this.close();
 	}
