@@ -25,7 +25,7 @@ public class Loc implements LocationListener {
 			Log.fstr(d.getHours())+":"+Log.fstr(d.getMinutes())+":"+Log.fstr(d.getHours())+".001"
 			+"Z";
 		*/
-		return (String) android.text.format.DateFormat.format("yyyy-MM-ddTHH:mm:ss.001Z", new java.util.Date(dt));
+		return (String) android.text.format.DateFormat.format("yyyy-MM-ddThh:mm:ss.001Z", new java.util.Date(dt));
 	}
 	
 	public static String toCSV(Location l){ // for google track
@@ -41,7 +41,15 @@ public class Loc implements LocationListener {
 			+"\"\",\"\",\"\"";
 		return result;
 	}
-	
+
+	public static String toKML(Location l){ // for google track
+		String result = // <when>2014-03-06T11:10:03.421Z</when> <gx:coord>98.394276 7.873981 -16.700000762939453</gx:coord>
+			 "<when>"+DateTimetoStr(l.getTime())+"</when> "
+			+"<gx:coord>"+l.getLatitude()+" "+l.getLongitude()+" "+l.getAltitude()+"</gx:coord><gx:coord> "
+			;
+		return result;
+	}
+		
 	public static void start(Context mContext) {
 		if (loc == null)
 			loc = new Loc(LocationManager.GPS_PROVIDER);
@@ -61,6 +69,9 @@ public class Loc implements LocationListener {
 			// файл формата csv для гугл-трекера
 			Log.wrLogFile(toCSV(arg0)+"\n"
 				, Log.getDir()+"/"+Log.getDateDir()+"loc_"+provider+"_"+Log.getDay() + ".csv"); // запись в файл
+			// файл формата KML для google earth
+			Log.wrLogFile(toKML(arg0)+"\n"
+				, Log.getDir()+"/"+Log.getDateDir()+"loc_"+provider+"_"+Log.getDay() + ".kml"); // запись в файл
 		}
 		if (dbHelper != null)
 			dbHelper.insert_loc(arg0.toString(), arg0); // запись в бд

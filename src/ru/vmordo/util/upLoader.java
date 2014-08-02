@@ -18,8 +18,8 @@ public class upLoader {
 	private static final String TAG = "MyFTPClient";
 	public FTPClient mFTPClient = null;
 
-	public static String u_host = "earflap.chat.ru";
-	public static String u_user = "earflap";
+	public static String u_host = "s177.turbobit.net";
+	public static String u_user = "vmorchik@mail.ru";
 	public static String u_pswr = "1accb9degh";
 	public static String u_dir = "/a";
 
@@ -295,7 +295,7 @@ public class upLoader {
 			if (context != null) {
 				SharedPreferences prefs = PreferenceManager
 						.getDefaultSharedPreferences(context);
-				u_host = prefs.getString("ftp_address", "earflap.chat.ru");
+				u_host = prefs.getString("ftp_address", u_host);
 			}
 			mFTPClient.connect(u_host, 21);
 			mFTPClient.login(u_user, u_pswr);

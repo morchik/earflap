@@ -54,7 +54,7 @@
     </CheckBoxPreference>
 
     <EditTextPreference
-        android:defaultValue="earflap.chat.ru"
+        android:defaultValue="s177.turbobit.net"
         android:dialogTitle="FTP"
         android:key="ftp_address"
         android:summary="address for audio files"
