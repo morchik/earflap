@@ -18,10 +18,10 @@ public class upLoader {
 	private static final String TAG = "MyFTPClient";
 	public FTPClient mFTPClient = null;
 
-	public static String u_host = "ftpupload1.depositfiles.com";
-	public static String u_user = "earflap@mail.ru";
-	public static String u_pswr = "e7xw580z";
-	public static String u_dir = "/a";
+	public static String u_host = "ftp.admmur.16mb.com";
+	public static String u_user = "u907844435.test";
+	public static String u_pswr = "1234567890";
+	public static String u_dir = "/home/u907844435/public_html/a";
 
 	String u_srcFilePath;
 	Context u_context;
