@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.vmordo.earflap.R;
@@ -29,7 +30,8 @@ public class LoginActivity extends FragmentActivity {
 
 	TextView tvOut;
 	EditText etPsw;
-
+	SeekBar sb;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,8 +40,9 @@ public class LoginActivity extends FragmentActivity {
 		setContentView(R.layout.myscreen);
 		tvOut = (TextView) findViewById(R.id.tvOut);
 		etPsw = (EditText) findViewById(R.id.edLogin);
+		sb = (SeekBar)findViewById(R.id.seekBar1);
 		etPsw.setOnKeyListener(new View.OnKeyListener() {
-
+		
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				tvOut.setText("");
@@ -48,6 +51,13 @@ public class LoginActivity extends FragmentActivity {
 		});
 	}
 
+
+	public void onClickSB(View v) throws IOException {
+		// получаем текущее время
+		int  p = sb.getProgress();
+		tvOut.setText("sb="+p);
+	}
+	
 	public void onClick(View v) throws IOException {
 		// получаем текущее время
 		final Calendar c = Calendar.getInstance();
