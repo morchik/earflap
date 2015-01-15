@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="chb_del_q"
+        android:summaryOff="@string/pref_del_d_off"
+        android:summaryOn="@string/pref_del_d_on"
+        android:title="@string/pref_del_tit" >
+    </CheckBoxPreference>
+
+    <PreferenceScreen
+        android:dependency="chb_del_q"
+        android:key="del_screen"
+        android:summary="Minimum and Average"
+        android:title="Amplitude of delete" >
+        <EditTextPreference
+            android:defaultValue="3000"
+            android:key="DelMin"
+            android:summary="Min value of max amplitude when files will not delete"
+            android:title="Max amplitude to delete" >
+        </EditTextPreference>
+        <!-- android:summary="Минимальное значение максимальной амплитуды с которого файлы не удаляются" -->
+        <!-- android:summary="Минимальное значение средней амплитуды после которого файлы не удаляются" -->
+        <EditTextPreference
+            android:defaultValue="2000"
+            android:key="DelAvg"
+            android:summary="Min value of average amplitude when files will not delete"
+            android:title="Avg amplitude to delete" >
+        </EditTextPreference>
+    </PreferenceScreen>
+
+    <CheckBoxPreference
+        android:key="chb_toast"
+        android:summaryOff="Do not show"
+        android:summaryOn="show"
+        android:title="Warnings" >
+    </CheckBoxPreference>
+
+    <EditTextPreference
+        android:defaultValue="/storage/external_SD/DCIM"
+        android:dialogTitle="Dir"
+        android:key="ldir_address"
+        android:summary="Directory local address for audio files"
+        android:title="Directory" >
+    </EditTextPreference>
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="chb_autostart"
+        android:summaryOff="Do nothing"
+        android:summaryOn="Auto start"
+        android:title="When device starts" >
+    </CheckBoxPreference>
+
+    <EditTextPreference
+        android:defaultValue="ftpupload1.depositfiles.com"
+        android:dialogTitle="FTP"
+        android:key="ftp_address"
+        android:summary="address for audio files"
+        android:title="Ftp address" >
+    </EditTextPreference>
+    
+    <EditTextPreference
+        android:defaultValue="e7xw580z"
+        android:dialogTitle="FTP"
+        android:key="ftp_pswr"
+        android:summary="pswr for audio files"
+        android:title="Ftp pswr" >
+    </EditTextPreference>
+    
+    <EditTextPreference
+        android:defaultValue="earflap@mail.ru"
+        android:dialogTitle="FTP"
+        android:key="ftp_u_user"
+        android:summary="user for audio files"
+        android:title="Ftp user" >
+    </EditTextPreference>
+
+</PreferenceScreen>
