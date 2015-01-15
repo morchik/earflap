@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -37,7 +38,14 @@ public class TrackingService extends Service {
 			Log.v(LOG_TAG, "chb_autostart on");
 		else
 			Log.v(LOG_TAG, "chb_autostart off");
-		
+		/// каждую минуту
+		if (BootBroadReceiv.odin == null) {
+			BootBroadReceiv.odin = new BootBroadReceiv();
+			registerReceiver(BootBroadReceiv.odin, new IntentFilter(
+					"android.intent.action.TIME_TICK"));
+			Log.d(LOG_TAG, "registerReceiver ");
+			
+		}
 		if (MainActivity.allowRec) 
 		{
 			
