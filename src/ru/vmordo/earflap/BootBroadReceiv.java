@@ -34,8 +34,7 @@ public class BootBroadReceiv extends BroadcastReceiver {
 			}
 		}
 		if (intent.getAction() == Intent.ACTION_TIME_TICK) {
-			ru.vmordo.util.Vibr.vibrate(context,
-					new long[] { 0, 30, 100, 40 });
+			//ru.vmordo.util.Vibr.vibrate(context,new long[] { 0, 30, 100, 40 });
 
 			SharedPreferences prefs = PreferenceManager
 					.getDefaultSharedPreferences(context);
