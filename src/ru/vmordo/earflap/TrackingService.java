@@ -39,13 +39,13 @@ public class TrackingService extends Service {
 		else
 			Log.v(LOG_TAG, "chb_autostart off");
 		/// каждую минуту
+		/*
 		if (BootBroadReceiv.odin == null) {
 			BootBroadReceiv.odin = new BootBroadReceiv();
 			registerReceiver(BootBroadReceiv.odin, new IntentFilter(
 					"android.intent.action.TIME_TICK"));
 			Log.d(LOG_TAG, "registerReceiver ");
-			
-		}
+		}*/
 		if (MainActivity.allowRec) 
 		{
 			

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import ru.vmordo.earflap.R;
 import java.io.IOException;
 
-public class LoginActivity extends FragmentActivity {
+public class LoginActivity extends FragmentActivity implements SeekBar.OnSeekBarChangeListener{
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -41,6 +41,7 @@ public class LoginActivity extends FragmentActivity {
 		tvOut = (TextView) findViewById(R.id.tvOut);
 		etPsw = (EditText) findViewById(R.id.edLogin);
 		sb = (SeekBar)findViewById(R.id.seekBar1);
+		sb.setOnSeekBarChangeListener(this);
 		etPsw.setOnKeyListener(new View.OnKeyListener() {
 		
 			@Override
@@ -52,12 +53,6 @@ public class LoginActivity extends FragmentActivity {
 	}
 
 
-	public void onClickSB(View v) throws IOException {
-		// получаем текущее время
-		int  p = sb.getProgress();
-		tvOut.setText("sb="+p);
-	}
-	
 	public void onClick(View v) throws IOException {
 		// получаем текущее время
 		final Calendar c = Calendar.getInstance();
@@ -88,5 +83,24 @@ public class LoginActivity extends FragmentActivity {
     public void onPause() {
         super.onPause();
      }
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser) {
+		int  p = sb.getProgress();
+		tvOut.setText(progress+" sb= "+p);
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

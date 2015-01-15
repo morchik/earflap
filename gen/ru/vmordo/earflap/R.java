@@ -36,13 +36,14 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f0c000c;
+        public static final int action_settings=0x7f0c000d;
         public static final int btnOk=0x7f0c0002;
         public static final int btnStart=0x7f0c0003;
         public static final int btnStop=0x7f0c0004;
         public static final int edLogin=0x7f0c000b;
         public static final int editTextLog=0x7f0c0008;
         public static final int lvMain=0x7f0c0006;
+        public static final int seekBar1=0x7f0c000c;
         public static final int tab1=0x7f0c0000;
         public static final int tab2=0x7f0c0005;
         public static final int tab3=0x7f0c0007;
