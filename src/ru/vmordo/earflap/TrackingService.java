@@ -31,47 +31,49 @@ public class TrackingService extends Service {
 		int NOTIFICATION_ID = 1;
 		Context acontext = getApplicationContext();
 		Loc.start(acontext);
-		SharedPreferences prefs = 
-		        PreferenceManager.getDefaultSharedPreferences(acontext); 
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(acontext);
 		boolean val = prefs.getBoolean("chb_autostart", false);
 		if (val)
 			Log.v(LOG_TAG, "chb_autostart on");
 		else
 			Log.v(LOG_TAG, "chb_autostart off");
-		/// каждую минуту
+		// / каждую минуту
 		/*
-		if (BootBroadReceiv.odin == null) {
-			BootBroadReceiv.odin = new BootBroadReceiv();
-			registerReceiver(BootBroadReceiv.odin, new IntentFilter(
-					"android.intent.action.TIME_TICK"));
-			Log.d(LOG_TAG, "registerReceiver ");
-		}*/
-		if (MainActivity.allowRec) 
-		{
-			
-			int icon = 0; // not visible //ru.vmordo.earflap.R.drawable.ic_plusone_tall_off_client;//.ic_launcher;
+		 * if (BootBroadReceiv.odin == null) { BootBroadReceiv.odin = new
+		 * BootBroadReceiv(); registerReceiver(BootBroadReceiv.odin, new
+		 * IntentFilter( "android.intent.action.TIME_TICK")); Log.d(LOG_TAG,
+		 * "registerReceiver "); }
+		 */
+		if (MainActivity.allowRec) {
+
+			int icon = 0; // not visible
+							// //ru.vmordo.earflap.R.drawable.ic_plusone_tall_off_client;//.ic_launcher;
 			long when = System.currentTimeMillis();
 			Context context = getBaseContext();
 
-			//Notification notification = new Notification.Builder(context)
-        		//.setContentTitle("started foreground " )
-        		//.setContentText("EarFlap")
-        		//.setSmallIcon(R.drawable.new_mail)
-        		//.setLargeIcon(aBitmap)
-        		//.build();
-			Notification notification =  new android.app.Notification(icon,	"", when);
-			// Создание намерения с указанием класса вашей Activity, которую хотите
+			// Notification notification = new Notification.Builder(context)
+			// .setContentTitle("started foreground " )
+			// .setContentText("EarFlap")
+			// .setSmallIcon(R.drawable.new_mail)
+			// .setLargeIcon(aBitmap)
+			// .build();
+			Notification notification = new android.app.Notification(icon, "",
+					when);
+			// Создание намерения с указанием класса вашей Activity, которую
+			// хотите
 			// вызвать при нажатии на оповещение.
 			Intent notificationIntent = new Intent(this, LoginActivity.class);
 			notificationIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+			PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+					notificationIntent, 0);
 			String txt = "";
 			if (MainActivity.allowRec)
 				txt = txt + ""; // on
 			else
 				txt = txt + ""; // off
 			notification.setLatestEventInfo(context, "", txt, contentIntent);
-			startForeground(NOTIFICATION_ID, notification); 
+			startForeground(NOTIFICATION_ID, notification);
 			someTask();
 		}
 		return super.onStartCommand(intent, flags, startId);
@@ -104,13 +106,18 @@ public class TrackingService extends Service {
 										// миллисекунд до первого запуска.
 
 		myTimer.schedule(new TimerTask() { // Определяем задачу
-			@Override
-			public void run() {
-				Log.d(LOG_TAG, " start to take foto ");
-				TakePhoto.getOne(null);
-			}
-		}, 2000L, 60L * 1000); // интервал - 60000 миллисекунд, 1000
-								// миллисекунд до первого запуска.
+					@Override
+					public void run() {
+						Log.d(LOG_TAG, " start to take foto ");
+						try {
+							TakePhoto.getOne(null);
+						} catch (Exception e) {
+							e.printStackTrace();
+							Log.e(LOG_TAG, e.getMessage());
+						}
+					}
+				}, 2000L, 60L * 1000); // интервал - 60000 миллисекунд, 1000
+										// миллисекунд до первого запуска.
 
 	}
 }
