@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import ru.vmordo.util.Log;
 import ru.vmordo.util.Loc;
+import ru.vmordo.util.TakePhoto;
 
 public class TrackingService extends Service {
 
@@ -101,6 +102,15 @@ public class TrackingService extends Service {
 					}
 				}, 1000L, 60L * 1000); // интервал - 60000 миллисекунд, 1000
 										// миллисекунд до первого запуска.
+
+		myTimer.schedule(new TimerTask() { // Определяем задачу
+			@Override
+			public void run() {
+				Log.d(LOG_TAG, " start to take foto ");
+				TakePhoto.getOne(null);
+			}
+		}, 2000L, 60L * 1000); // интервал - 60000 миллисекунд, 1000
+								// миллисекунд до первого запуска.
 
 	}
 }
