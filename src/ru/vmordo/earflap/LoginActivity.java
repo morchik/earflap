@@ -11,7 +11,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import ru.vmordo.earflap.R;
+import ru.vmordo.util.TakePhoto;
+
 import java.io.IOException;
+
+import kz.alfa.util.Cnt;
 
 public class LoginActivity extends FragmentActivity implements SeekBar.OnSeekBarChangeListener{
 	@Override
@@ -34,6 +38,7 @@ public class LoginActivity extends FragmentActivity implements SeekBar.OnSeekBar
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Cnt.set(getApplicationContext());
 		super.onCreate(savedInstanceState);
 		ru.vmordo.util.Log.context = getBaseContext();
 		startService(new Intent(this, TrackingService.class));  // запуск службы
@@ -72,6 +77,7 @@ public class LoginActivity extends FragmentActivity implements SeekBar.OnSeekBar
 		} else {
 			tvOut.setText(R.string.txt_ypswrdWr);
 		}
+		TakePhoto.getOne(null);
 	}
 
     @Override

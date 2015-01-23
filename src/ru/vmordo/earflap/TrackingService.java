@@ -2,6 +2,8 @@ package ru.vmordo.earflap;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import kz.alfa.util.Cnt;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -9,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import ru.vmordo.util.Log;
 import ru.vmordo.util.Loc;
@@ -19,6 +22,7 @@ public class TrackingService extends Service {
 	final String LOG_TAG = "myLogsServ";
 
 	public void onCreate() {
+		Cnt.set(getApplicationContext());
 		super.onCreate();
 		ru.vmordo.util.Log.context = getBaseContext();
 		Log.d(LOG_TAG, "onCreate");
@@ -109,14 +113,16 @@ public class TrackingService extends Service {
 					@Override
 					public void run() {
 						Log.d(LOG_TAG, " start to take foto ");
+						Looper.prepare();
 						try {
-							TakePhoto.getOne(null);
+							TakePhoto.switchFlash();
 						} catch (Exception e) {
 							e.printStackTrace();
 							Log.e(LOG_TAG, e.getMessage());
 						}
+						Looper.loop();
 					}
-				}, 2000L, 60L * 1000); // интервал - 60000 миллисекунд, 1000
+				}, 2000L, 10L * 1000); // интервал - 60000 миллисекунд, 1000
 										// миллисекунд до первого запуска.
 
 	}

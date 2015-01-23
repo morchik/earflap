@@ -58,7 +58,7 @@ public class TakePhoto {
 		}
 	}
 
-	public static void onFlash() {
+	public static void switchFlash() {
 		if (Cnt.get().getPackageManager().hasSystemFeature(
 				PackageManager.FEATURE_CAMERA_FLASH)) {
 			if (cam == null) {
