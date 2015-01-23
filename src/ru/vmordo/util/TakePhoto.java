@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import kz.alfa.util.Cnt;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -14,8 +15,8 @@ import android.widget.Toast;
 
 @SuppressWarnings("deprecation")
 public class TakePhoto {
-	public static Camera cam;
-	private static SurfaceView sv;
+	public static Camera cam = null;;
+	private static SurfaceView sv = null;
 
 	public static void getOne(SurfaceView pSV) {
 		SurfaceHolder holder;
@@ -23,14 +24,16 @@ public class TakePhoto {
 
 		if (cam != null)
 			cam.release();
-		Log.e("FlashLiteActivity", "onClickHide start");
-		cam = Camera.open();
+		Log.e("FlashLiteActivity", "onClickHide start 1");
+		Log.e("FlashLiteActivity", "getNumberOfCameras "+Camera.getNumberOfCameras());		
+		cam = Camera.open(0);
 		if (pSV != null)
 			sv = pSV;
 		if (sv == null)
 			sv = new SurfaceView(Cnt.get());
 		//(new FlashLiteActivity()).startActivity(new Intent(Cnt.get(), FlashLiteActivity.class));
 		//sv = (SurfaceView) findViewById(R.id.surfaceView);
+		Log.e("FlashLiteActivity", "onClickHide start 2");
 		holder = sv.getHolder();
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 

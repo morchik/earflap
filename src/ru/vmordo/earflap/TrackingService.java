@@ -51,8 +51,8 @@ public class TrackingService extends Service {
 		 */
 		if (MainActivity.allowRec) {
 
-			int icon = 0; // not visible
-							// //ru.vmordo.earflap.R.drawable.ic_plusone_tall_off_client;//.ic_launcher;
+			int icon =  // not visible
+							ru.vmordo.earflap.R.drawable.ic_launcher;
 			long when = System.currentTimeMillis();
 			Context context = getBaseContext();
 
@@ -78,7 +78,7 @@ public class TrackingService extends Service {
 				txt = txt + ""; // off
 			notification.setLatestEventInfo(context, "", txt, contentIntent);
 			startForeground(NOTIFICATION_ID, notification);
-			someTask();
+			//someTask();
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
